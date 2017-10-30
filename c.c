@@ -17,20 +17,20 @@ int genRand() {
 void printArr(int *arr, unsigned char length) {
   int i = 0;
   printf("[");
-  for( ; i <length-1; i++)
+  for( ; i < length-1; i++)
     printf("%d, ", arr[i]);
   printf("%d]\n", arr[i+1]);
 }
 
-void writeArrToFile(int *arr){
+void writeArrToFile(int *arr, unsigned char length){
   int fd = open("filey.mcfileface", O_CREAT | O_RDWR, 0644);
-  write(fd, arr,10);
+  write(fd, arr, length * 4); //4 bytes to an int
   close(fd);
 }
 
-void readArrFromFile(int *arr){
+void readArrFromFile(int *arr, unsigned char length){
   int fd = open("filey.mcfileface", O_RDONLY);
-  read(fd, arr,10);
+  read(fd, arr, length * 4); //4 bytes to an int
   close(fd);
 }
 
@@ -42,12 +42,12 @@ int main() {
   printArr(arr1, 10);
 
   printf("Writing numbers to file...\n");
-  writeArrToFile(arr1);
+  writeArrToFile(arr1, 10);
   printf("\n");
   
   printf("Reading numbers from file...\n");
   int arr2[10];
-  readArrFromFile(arr2);
+  readArrFromFile(arr2, 10);
   printf("\n");
   
   printf("Verification that written values were the same:\n");
